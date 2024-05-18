@@ -94,3 +94,4 @@ wasabi==1.1.2
 weasel==0.3.4
 wrapt==1.16.0
 yarl==1.9.4
+youtube-search-python==1.6.6
