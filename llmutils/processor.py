@@ -7,6 +7,7 @@ from llama_index.vector_stores.chroma import ChromaVectorStore
 from llama_index.core import StorageContext
 from llama_index.llms.openai import OpenAI
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+from llama_index.embeddings.openai import OpenAIEmbedding
 from llama_index.core import Settings
 import chromadb
 
@@ -15,14 +16,14 @@ import openai
 from dotenv import load_dotenv
 from django.conf import settings
 
-conf = settings.CONFIG
+# conf = settings.CONFIG
 
 if load_dotenv:
     print(
         '---Environment variables loaded---'.upper()
     )
-openai.api_key = os.environ.get("API_KEY")
-
+openai.api_key = os.environ.get("OPENAI_API_KEY")
+print(openai.api_key)
 
 MODEL = "gpt-3.5-turbo"
 
@@ -41,14 +42,11 @@ class BillieChat:
     
     def __init__(self):
         if self._initialized == False: 
-            Settings.embed_model = HuggingFaceEmbedding()
-            self.vecdb = chromadb.PersistentClient(path="./vectordb/chroma_db")
-            self.chroma_collection = self.vecdb.get_or_create_collection("lessonplan")
+            Settings.embed_model = OpenAIEmbedding(api_key=openai.api_key)
+            self.documents = SimpleDirectoryReader("./Lesson Plan").load_data()
             print("1. Doc loaded...")
 
-            self.vector_store = ChromaVectorStore(chroma_collection=self.chroma_collection)
-            self.storage_context = StorageContext.from_defaults(vector_store=self.vector_store)
-            self.index = VectorStoreIndex.from_documents(self.documents)
+            self.index = index = VectorStoreIndex.from_documents(self.documents)
             print("2. Index created...")
             
             self.context_str = (
