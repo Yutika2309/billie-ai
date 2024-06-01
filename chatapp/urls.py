@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import ClassDetailsListCreateView, ClassDetailsDetailView
+from .views import DocumentChatView, ChatDetailsDetailView
 
 urlpatterns = [
-    path('class-details/', ClassDetailsListCreateView.as_view(), name='class-details-list-create'),
-    path('class-details/<int:pk>/', ClassDetailsDetailView.as_view(), name='class-details-detail')
+    path('chat-details/', DocumentChatView.as_view(), name='class-details-list-create'),
+    path('chat-details/<int:pk>/', ChatDetailsDetailView.as_view(), name='class-details-detail')
 ]

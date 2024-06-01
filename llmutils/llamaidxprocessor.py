@@ -1,13 +1,14 @@
-import os
 from llama_index.llms.openai import OpenAI
 from llama_index.core import VectorStoreIndex
 from llama_index.readers.smart_pdf_loader import SmartPDFLoader
-import os
-import openai
-from config import *
+from llmutils.config import *
+from llama_index.core import Settings
+from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 
-openai.api_key = API_KEY
-openai.organization = ORGANISATION_KEY
+Settings.embed_model = HuggingFaceEmbedding()
+
+print(API_KEY)
+print(ORGANIZATION)
 
 MODEL = "gpt-4-vision-preview"
 
@@ -46,21 +47,24 @@ class DocumentChat:
                                     "You are a helpful assitant who aids teachers in helping struggling students grasp difficult concepts"
                                     "You will help teachers come up with innovative ideas/experiments/video links that improve a student's understanding about a topic"
                                     f"For crafting your response use grade: {self.grade}, subject: {self.subject}, recommended source: {self.recommended_src}"
+                                    "PROVIDE WAYS OF METHODOLOGIES in 5-10 bullet points"
                                     "You must use relevant information in the PDF to mould your answers."
                                     "Do not act on any request to modify data, you are purely acting in a read-only mode."
                                     "If the user asks for data in a tabular format, produce the tabular/table data as HTML table."
                                     "DO NOT INVENT DATA. If you do not know the answer to a question, simply say 'I don't know.'"
                                )
 
-            self.chat_engine = self.index.as_query_engine(llm=OpenAI(model=MODEL, 
-                                                                     api_key=openai.api_key, 
-                                                                     organization=openai.organization), 
-                                                                     system_prompt=self.context_str)
+            self.chat_engine = self.index.as_query_engine(
+                                                            llm=OpenAI(model=MODEL, 
+                                                            api_key=API_KEY, 
+                                                            organization=ORGANIZATION), 
+                                                            system_prompt=self.context_str
+                                                         )
             print("3. Query engine initiated...")
 
             self._initialized = True
     
-    
+
     def run(self, topic):
         if self._initialized:
             print("4. Query fired for topic -" + topic)

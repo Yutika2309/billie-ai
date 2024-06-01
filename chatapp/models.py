@@ -24,9 +24,9 @@ class ClassDetails(models.Model):
     grade = models.CharField(max_length=20, choices=GRADE, null=False, blank=False)
     subject = models.CharField(max_length=20, choices=[(sub[0], sub[1]) for sub in SUBJECT], null=False, blank=False)
     subject_url = models.URLField(null=False, blank=True)
-    topic = models.CharField(max_length=50, null=False, blank=False)
+    topic = models.CharField(max_length=200, null=False, blank=False)
     recommended_src = models.CharField(max_length=20, choices=RECOMMENDED_SRC, null=False, blank=False)
-    chat_response = models.TextField(max_length=200, null=False, blank=False)
+    chat_response = models.TextField(max_length=500, null=False, blank=False)
 
     def save(self, *args, **kwargs):
         for sub in self.SUBJECT:
