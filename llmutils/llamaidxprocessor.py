@@ -4,14 +4,12 @@ from llama_index.core import SimpleDirectoryReader, VectorStoreIndex
 from llama_index.readers.smart_pdf_loader import SmartPDFLoader
 import os
 import openai
-from dotenv import load_dotenv
-if load_dotenv:
-    print(
-        '---Environment variables loaded---'.upper()
-    )
-openai.api_key = os.environ.get("API_KEY")
+from config import *
 
-MODEL = "gpt-4-vision-preview"
+openai.api_key = API_KEY
+openai.organization = ORGANISATION_KEY
+
+MODEL = "gpt-4o"
 
 class DocumentChat:
     """
@@ -49,7 +47,10 @@ class DocumentChat:
                                 )
 
 
-            self.chat_engine = self.index.as_query_engine(llm=OpenAI(model=MODEL, api_key=openai.api_key), system_prompt=self.context_str)
+            self.chat_engine = self.index.as_query_engine(llm=OpenAI(model=MODEL, 
+                                                                     api_key=openai.api_key, 
+                                                                     organization=openai.organization), 
+                                                                     system_prompt=self.context_str)
             print("3. Query engine initiated...")
 
             self._initialized = True
