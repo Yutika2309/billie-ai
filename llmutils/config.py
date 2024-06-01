@@ -1,0 +1,2 @@
+API_KEY = "sk-proj-wlUdinFNbHLgoCqGF5MeT3BlbkFJf1st19Mmw4Pq16oMIjEg"
+ORGANISATION_KEY = "org-sRYfPMhzX7xXfaCIqOiKH5RD"

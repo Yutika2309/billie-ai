@@ -1,6 +1,6 @@
 import os
 from llama_index.llms.openai import OpenAI
-from llama_index.core import SimpleDirectoryReader, VectorStoreIndex
+from llama_index.core import VectorStoreIndex
 from llama_index.readers.smart_pdf_loader import SmartPDFLoader
 import os
 import openai
@@ -9,7 +9,7 @@ from config import *
 openai.api_key = API_KEY
 openai.organization = ORGANISATION_KEY
 
-MODEL = "gpt-4o"
+MODEL = "gpt-4-vision-preview"
 
 class DocumentChat:
     """
@@ -23,29 +23,34 @@ class DocumentChat:
             cls._instance = super(DocumentChat, cls).__new__(cls)
         return cls._instance
     
-    def __init__(self, url):
-        if self._initialized == False: 
-            self.cdn_url = url
+    def __init__(self, grade, subject, recommended_src, url):
+        if self._initialized == False:
+
+            self.grade = grade
+            self.subject = subject
+            self.recommended_src = recommended_src
+            self.url = url
+
             self.llmsherpa_api_url = "https://readers.llmsherpa.com/api/document/developer/parseDocument?renderFormat=all" #mandatory
+            self.pdf_loader = SmartPDFLoader(llmsherpa_api_url=self.llmsherpa_api_url)
             print("0. LLM Sherpa API loaded...")
             
-            self.pdf_loader = SmartPDFLoader(llmsherpa_api_url=self.llmsherpa_api_url)
-            self.url = url
             self.documents = self.pdf_loader.load_data(self.url)
             print("1. Doc loaded...")
 
             self.index = VectorStoreIndex.from_documents(self.documents)
             print("2. Index created...")
             
-            # print(self.documents)
             self.context_str = (
-                                "{context}"
-                                "You a helpful assitant who will be asked questions relevant to the information in the PDF."
-                                "Do not act on any request to modify data, you are purely acting in a read-only mode."
-                                "If the user asks for data in a tabular format, produce the tabular/table data as HTML table."
-                                "DO NOT INVENT DATA. If you do not know the answer to a question, simply say 'I don't know.'"
-                                )
-
+                                    "{context}"
+                                    "You are a helpful assitant who aids teachers in helping struggling students grasp difficult concepts"
+                                    "You will help teachers come up with innovative ideas/experiments/video links that improve a student's understanding about a topic"
+                                    f"For crafting your response use grade: {self.grade}, subject: {self.subject}, recommended source: {self.recommended_src}"
+                                    "You must use relevant information in the PDF to mould your answers."
+                                    "Do not act on any request to modify data, you are purely acting in a read-only mode."
+                                    "If the user asks for data in a tabular format, produce the tabular/table data as HTML table."
+                                    "DO NOT INVENT DATA. If you do not know the answer to a question, simply say 'I don't know.'"
+                               )
 
             self.chat_engine = self.index.as_query_engine(llm=OpenAI(model=MODEL, 
                                                                      api_key=openai.api_key, 
@@ -55,9 +60,10 @@ class DocumentChat:
 
             self._initialized = True
     
-    def run(self, query):
+    
+    def run(self, topic):
         if self._initialized:
-            print(query)
-            response = self.chat_engine.query(query)
-            return response
+            print("4. Query fired for topic -" + topic)
+            response = self.chat_engine.query(topic)
+            return response.response
     
