@@ -1,4 +1,5 @@
 postgres_data/
 vectordb/
 Lesson Plan/
-config.py/
+llmutils/config.py
+notebooks/config.py
