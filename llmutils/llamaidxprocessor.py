@@ -7,8 +7,8 @@ from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 
 Settings.embed_model = HuggingFaceEmbedding()
 
-print(API_KEY)
-print(ORGANIZATION)
+# print(API_KEY)
+# print(ORGANIZATION)
 
 MODEL = "gpt-4-vision-preview"
 
