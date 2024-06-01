@@ -82,8 +82,8 @@ DATABASES = {
        'NAME': 'billie_db',
        'USER': 'postgres',
        'PASSWORD': 'postgres',
-       'HOST': 'localhost', 
-       'PORT': '5432',
+       'HOST': 'db', 
+       'PORT': '5433',
    }
 }
 

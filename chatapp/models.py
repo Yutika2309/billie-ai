@@ -26,7 +26,7 @@ class ClassDetails(models.Model):
     subject_url = models.URLField(null=False, blank=True)
     topic = models.CharField(max_length=200, null=False, blank=False)
     recommended_src = models.CharField(max_length=20, choices=RECOMMENDED_SRC, null=False, blank=False)
-    chat_response = models.TextField(max_length=500, null=False, blank=False)
+    chat_response = models.TextField(max_length=1000, null=False, blank=False)
 
     def save(self, *args, **kwargs):
         for sub in self.SUBJECT:
