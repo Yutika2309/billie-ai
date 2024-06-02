@@ -79,10 +79,10 @@ WSGI_APPLICATION = 'billie.wsgi.application'
 DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.postgresql', 
-       'NAME': 'billie_db',
+       'NAME': 'billie-db',
        'USER': 'postgres',
-       'PASSWORD': 'postgres',
-       'HOST': 'db', 
+       'PASSWORD': 'BillieDB123',
+       'HOST': 'billie-db.cnawecaeq7au.ap-south-1.rds.amazonaws.com', 
        'PORT': '5433',
    }
 }
