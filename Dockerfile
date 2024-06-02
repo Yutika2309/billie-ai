@@ -5,5 +5,5 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 COPY requirements.txt /app/
 RUN apt-get -y update && apt-get -y upgrade
-RUN pip install -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 COPY . /app/

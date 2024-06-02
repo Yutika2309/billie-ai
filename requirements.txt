@@ -4,10 +4,7 @@ djangorestframework==3.14.0
 huggingface-hub==0.23.0
 llama-index==0.10.10
 llama-index-agent-openai==0.1.7
-llama-index-cli==0.1.11
-llama-index-core==0.10.29
 llama-index-embeddings-openai==0.1.7
-llama-index-indices-managed-llama-cloud==0.1.5
 llama-index-legacy==0.9.48
 llama-index-llms-openai==0.1.15
 llama-index-multi-modal-llms-openai==0.1.5
@@ -17,10 +14,10 @@ llama-index-readers-file==0.1.19
 llama-index-readers-llama-parse==0.1.4
 llama-parse==0.4.1
 llamaindex-py-client==0.1.18
-psycopg2==2.9.5
-pypdf==4.2.0
-PyPDF2==3.0.1
-llmsherpa==0.1.4
 llama-index-readers-smart-pdf-loader==0.1.4
 llama-index-llms-huggingface==0.2.0
 llama-index-embeddings-huggingface==0.2.0
+llmsherpa==0.1.4
+psycopg2==2.9.5
+pypdf==4.2.0
+PyPDF2==3.0.1
