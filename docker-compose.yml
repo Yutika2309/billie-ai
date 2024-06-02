@@ -12,8 +12,6 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
-    depends_on:
-      - db
     networks:
       - billie_services
     
